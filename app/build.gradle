@@ -50,7 +50,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     //Custom bottom navigation bar
-//    implementation 'com.github.simformsolutions:SSCustomBottomNavigation:3.4'
+    implementation 'com.github.simformsolutions:SSCustomBottomNavigation:3.4'
 
     //multidex
 //    def multidex_version = "2.0.1"
