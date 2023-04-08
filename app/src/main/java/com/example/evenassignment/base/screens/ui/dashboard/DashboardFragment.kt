@@ -1,5 +1,7 @@
 package com.example.evenassignment.base.screens.ui.dashboard
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
@@ -7,14 +9,20 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewAnimationUtils
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
+import androidx.core.animation.addListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.evenassignment.R
 import com.example.evenassignment.base.screens.ServiceTypeActivity
 import com.example.evenassignment.databinding.FragmentDashboardBinding
+import com.simform.custombottomnavigation.SSCustomBottomNavigation
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.math.hypot
 
 
 class DashboardFragment : Fragment() {
@@ -40,7 +48,6 @@ class DashboardFragment : Fragment() {
 
         initUi()
 
-//        val textView: TextView = binding.textDashboard
 //        dashboardViewModel.text.observe(viewLifecycleOwner) {
 //            textView.text = it
 //        }
@@ -54,32 +61,62 @@ class DashboardFragment : Fragment() {
 
     private fun beginImageAnimation() {
 
-        val translationAnimator = ObjectAnimator.ofFloat(
-            binding.plusIcon, "translationY", 300f
-        ).apply {
-            duration = 750
-        }
-        translationAnimator.start()
-
-        val alphaAnimator = ObjectAnimator.ofFloat(
-            binding.plusIcon, "alpha", 0.0f, 1.0f
-        )
+//        val translationAnimator = ObjectAnimator.ofFloat(
+//            binding.plusIcon, "translationY", 300f
+//        ).apply {
+//            duration = 750
+//        }
+//        translationAnimator.start()
     }
 
     private fun initUi() {
-        binding.plusIcon.setOnClickListener {
-            startActivity(Intent(activity, ServiceTypeActivity::class.java))
-        }
-    }
 
-    override fun onPause() {
-        super.onPause()
-        Log.d(TAG, "onPause: called")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(TAG, "onStop: called")
+//        binding.plusIcon.setOnClickListener {
+//
+//            Log.d(TAG, "initUi: clicked plus icon")
+//            // Create a reveal {@link Animator} that starts clipping the view from
+//            // the top left corner until the whole view is covered.
+//
+//            val rotateAnimator = ObjectAnimator.ofFloat(
+//                binding.plusIcon, "rotation", 0f, -90f
+//            )
+//
+//            val translationXAnimator = ObjectAnimator.ofFloat(
+//                binding.plusIcon, "translationX", -200f
+//            )
+//
+//            val animatorSet = AnimatorSet()
+//            animatorSet.playTogether(rotateAnimator, translationXAnimator)
+//            animatorSet.duration = 250
+//
+//            val circularReveal = ViewAnimationUtils.createCircularReveal(
+//                binding.shape,
+//                (binding.plusIcon.left + binding.plusIcon.right)/2,
+//                (binding.plusIcon.top + binding.plusIcon.bottom)/2,
+//                (binding.plusIcon.height/2).toFloat(), hypot(binding.root.width.toDouble(), binding.root.height.toDouble()).toFloat()
+//            )
+//
+//            circularReveal.interpolator = AccelerateDecelerateInterpolator()
+//
+//            circularReveal.addListener(object : AnimatorListenerAdapter() {
+//                override fun onAnimationEnd(animation: Animator) {
+//                    binding.shape.visibility = View.INVISIBLE
+//
+//                    val bottomNavigationView = activity?.findViewById<SSCustomBottomNavigation>(R.id.nav_view)
+//                    bottomNavigationView?.visibility = View.INVISIBLE
+//
+//                    binding.serviceTypeLayout.visibility = View.VISIBLE
+//                }
+//            })
+//
+//            binding.shape.visibility = View.VISIBLE
+//            // Finally start the animation
+//            animatorSet.start().also {
+//                circularReveal.start()
+//            }
+//
+//
+//        }
     }
 
 
@@ -87,27 +124,22 @@ class DashboardFragment : Fragment() {
         super.onDestroyView()
         Log.d(TAG, "onDestroyView: called")
 
-        val translationAnimator = ObjectAnimator.ofFloat(
-            binding.plusIcon, "translationY", 0.0f
-        )
-
-        val alphaAnimator = ObjectAnimator.ofFloat(
-            binding.plusIcon, "alpha", 1.0f, 0.0f
-        )
-
-        val animatorSet = AnimatorSet()
-        animatorSet.playTogether(translationAnimator, alphaAnimator)
-        animatorSet.duration = 1000
-        animatorSet.start()
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            delay(animatorSet.duration)
-        }
+//        val translationAnimator = ObjectAnimator.ofFloat(
+//            binding.plusIcon, "translationY", 0.0f
+//        )
+//
+//        val alphaAnimator = ObjectAnimator.ofFloat(
+//            binding.plusIcon, "alpha", 1.0f, 0.0f
+//        )
+//
+//        val animatorSet = AnimatorSet()
+//        animatorSet.playTogether(translationAnimator, alphaAnimator)
+//        animatorSet.duration = 1000
+//        animatorSet.start()
+//
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            delay(animatorSet.duration)
+//        }
 //        _binding = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(TAG, "onDestroy: called")
     }
 }
