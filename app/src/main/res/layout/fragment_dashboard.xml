@@ -50,7 +50,6 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/consultation_one"
                 app:layout_constraintTop_toTopOf="parent"
                 >
 
@@ -177,7 +176,6 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/consultation_one"
                 app:layout_constraintTop_toTopOf="parent"
                 >
 
@@ -193,6 +191,7 @@
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/consultation_two"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="15dp"

@@ -61,12 +61,31 @@ class DashboardFragment : Fragment() {
 
     private fun beginImageAnimation() {
 
-//        val translationAnimator = ObjectAnimator.ofFloat(
-//            binding.plusIcon, "translationY", 300f
-//        ).apply {
-//            duration = 750
-//        }
-//        translationAnimator.start()
+        val translationC1Animator = ObjectAnimator.ofFloat(
+            binding.consultationOne, "translationX", 600f, 0f
+        )
+
+        val dateTimeOneAnimator = ObjectAnimator.ofFloat(
+            binding.dateTimeOne, "translationX", 100f, 0f
+        )
+
+        val translationC2Animator = ObjectAnimator.ofFloat(
+            binding.consultationTwo, "translationX", 600f, 0f
+        )
+
+        val dateTimeTwoAnimator = ObjectAnimator.ofFloat(
+            binding.dateTimeTwo, "translationX", 100f, 0f
+        )
+
+        val animatorSet = AnimatorSet()
+        animatorSet.playSequentially(translationC1Animator, dateTimeOneAnimator)
+        animatorSet.duration = 200
+        animatorSet.start()
+
+        val animatorSetTwo = AnimatorSet()
+        animatorSetTwo.playSequentially(translationC2Animator, dateTimeTwoAnimator)
+        animatorSetTwo.duration = 200
+        animatorSetTwo.start()
     }
 
     private fun initUi() {
