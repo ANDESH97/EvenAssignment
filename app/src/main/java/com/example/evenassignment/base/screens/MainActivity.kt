@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.closeServiceLayout.setOnClickListener {
-
+            closeServiceLayout()
         }
 
         setBottomNavigationWithNavController(savedInstanceState)
@@ -174,7 +174,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         val translationXAnimator = ObjectAnimator.ofFloat(
-            binding.addIcon, "translationX", -200f
+            binding.addIcon, "translationX", -50f
         )
 
         val animatorSet = AnimatorSet()
@@ -218,7 +218,7 @@ class MainActivity : AppCompatActivity() {
 
         val animatorSet = AnimatorSet()
         animatorSet.playTogether(translationXAnimator, translationYAnimator)
-        animatorSet.duration = 250
+        animatorSet.duration = 500
 
         val circularReveal = ViewAnimationUtils.createCircularReveal(
             binding.closeServiceLayout,
@@ -232,7 +232,7 @@ class MainActivity : AppCompatActivity() {
 
         circularReveal.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
-                binding.shape.visibility = View.VISIBLE
+                binding.shape.visibility = View.INVISIBLE
                 binding.navView.visibility = View.VISIBLE
 
                 binding.serviceTypeLayout.visibility = View.INVISIBLE
@@ -242,6 +242,18 @@ class MainActivity : AppCompatActivity() {
         // Finally start the animation
         animatorSet.start().also {
             circularReveal.start()
+            val translatePlusIconXAnimator = ObjectAnimator.ofFloat(
+                binding.addIcon, "translationX", 0f
+            )
+
+            val translatePlusIconYAnimator = ObjectAnimator.ofFloat(
+                binding.addIcon, "translationY", 300f
+            )
+
+            val plusIconAnimatorSet = AnimatorSet()
+            plusIconAnimatorSet.playTogether(translatePlusIconXAnimator, translatePlusIconYAnimator)
+            plusIconAnimatorSet.duration = 250
+            plusIconAnimatorSet.start()
         }
 
         val dashboardFragmentView = findViewById<View>(R.id.dashboard_screen)
