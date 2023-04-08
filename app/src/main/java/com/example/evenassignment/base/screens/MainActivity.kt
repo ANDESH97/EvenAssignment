@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import com.example.evenassignment.R
+import com.example.evenassignment.base.screens.ui.dashboard.DashboardFragment
 import com.example.evenassignment.databinding.ActivityMainBinding
 import com.simform.custombottomnavigation.Model
 import com.simform.custombottomnavigation.SSCustomBottomNavigation
@@ -25,8 +26,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private var isAppStart = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -35,6 +34,14 @@ class MainActivity : AppCompatActivity() {
 
         binding.headingText.alpha = 0.0f
         binding.addConsultation.alpha = 0.0f
+
+        binding.addIcon.setOnClickListener {
+            startServiceLayoutAnimation()
+        }
+
+        binding.closeServiceLayout.setOnClickListener {
+
+        }
 
         setBottomNavigationWithNavController(savedInstanceState)
 
@@ -157,12 +164,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun startServiceLayoutAnimation() {
 
+        hideDashBoardElements()
+
+        val dashboardFragmentView = findViewById<View>(R.id.dashboard_screen)
+        dashboardFragmentView?.visibility = View.INVISIBLE
+
         val rotateAnimator = ObjectAnimator.ofFloat(
             binding.addIcon, "rotation", 0f, -90f
         )
 
         val translationXAnimator = ObjectAnimator.ofFloat(
-            binding.addIcon, "translationX", -100f
+            binding.addIcon, "translationX", -200f
         )
 
         val animatorSet = AnimatorSet()
@@ -196,5 +208,47 @@ class MainActivity : AppCompatActivity() {
 
     private fun closeServiceLayout() {
 
+        val translationXAnimator = ObjectAnimator.ofFloat(
+            binding.closeServiceLayout, "translationX", 100f
+        )
+
+        val translationYAnimator = ObjectAnimator.ofFloat(
+            binding.closeServiceLayout, "translationY", 100f
+        )
+
+        val animatorSet = AnimatorSet()
+        animatorSet.playTogether(translationXAnimator, translationYAnimator)
+        animatorSet.duration = 250
+
+        val circularReveal = ViewAnimationUtils.createCircularReveal(
+            binding.closeServiceLayout,
+            (binding.closeServiceLayout.width)/2,
+            (binding.closeServiceLayout.height)/2,
+            hypot(binding.root.width.toDouble(), binding.root.height.toDouble()).toFloat(),
+            (binding.addIcon.height/2).toFloat()
+        )
+
+        circularReveal.interpolator = AccelerateDecelerateInterpolator()
+
+        circularReveal.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                binding.shape.visibility = View.VISIBLE
+                binding.navView.visibility = View.VISIBLE
+
+                binding.serviceTypeLayout.visibility = View.INVISIBLE
+            }
+        })
+
+        // Finally start the animation
+        animatorSet.start().also {
+            circularReveal.start()
+        }
+
+        val dashboardFragmentView = findViewById<View>(R.id.dashboard_screen)
+        dashboardFragmentView?.visibility = View.VISIBLE
+
+        binding.addIcon.alpha = 1.0f
+        binding.headingText.alpha = 1.0f
+        binding.addConsultation.alpha = 1.0f
     }
 }
